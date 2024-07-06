@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- === Metadata === -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- === Title === -->
+    <title>Vue Testing</title>
+    <!-- === Vue CDN === -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+
+    <!-- === App Rendering === -->
+    <div id="app">
+        <div class="container">
+            <div class="row">
+                <h1>
+                    {{message}}
+                </h1>
+                <button @click="clickMe">Click Me</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- === App component === -->
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    message: "Hello Tanzania"
+                };
+            },
+            methods: {
+                clickMe() {
+                    console.log("Button clicked");
+                    this.message = "You clicked me!";
+                },
+            },
+        });
+
+        app.mount("#app");
+    </script>
+
+    <!-- === CSS === -->
+    <style scoped>
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80vh;
+            gap: 2em;
+        }
+
+        .row  {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        h1 {
+            color: green;
+            font-size: 60px;
+            font-weight: 400;
+        }
+
+        button {
+            border: none;
+            outline: none;
+            padding: 12px 24px;
+            border-radius: 50px;
+            color: green;
+            transition: all 0.3s;
+            border: 1px solid yellowgreen;
+            background-color: transparent;
+        }
+
+        button:hover {
+            cursor: pointer;
+            border: 1px solid green;
+            color: white;
+            background-color: green;
+        }
+    </style>
+
+</body>
+
+</html>
