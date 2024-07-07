@@ -14,7 +14,7 @@ const jobs = ref(jobData);
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Job Listings  -->
-                <div class="bg-white rounded-xl shadow-md relative" v-for="job in jobs">
+                <div class="bg-white rounded-xl shadow-md relative" v-for="job in jobs" :key="job.id">
                     <div class="p-4">
                         <div class="mb-6">
                             <div class="text-gray-600 my-2">{{ job.type }}</div>
