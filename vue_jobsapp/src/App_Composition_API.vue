@@ -37,7 +37,7 @@ export default {
 
 <!-- === Short version === -->
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const loggedIn = ref(false);
 const name = ref("John Doe");
@@ -73,6 +73,16 @@ const deleteTask = (index) => {
   }
 }
 
+onMounted(async () => {
+  try {
+    const response = await fetch("https://jsonplaceholder.typicode.com/todos");
+    const data = await response.json();
+    tasks.value = data.map((task) => task.title.charAt(0).toUpperCase() + task.title.slice(1));
+  } catch (error) {
+    console.log("Error fetching tasks");
+  }
+});
+
 </script>
 
 <template>
@@ -92,13 +102,15 @@ const deleteTask = (index) => {
         <div class="col">
           <hr>
           <h3>Tasks:</h3>
-          <ol type="A">
+          <ol type="1">
             <li v-for="(task, index) in tasks" :key="task">
-              <span>
-                {{ task }}
-              </span>
-              <div id="deleteTasky">
-                <span @click="deleteTasky(index)">x</span>
+              <div class="list">
+                <span>
+                  {{ task }}
+                </span>
+                <div id="deleteTasky">
+                  <span @click="deleteTasky(index)">x</span>
+                </div>
               </div>
             </li>
           </ol>
@@ -183,11 +195,12 @@ form input {
   margin: 15px 0 20px 0;
 }
 
-li {
+.list {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   gap: 0.3em;
+  width: 100%;
 }
 
 #deleteTasky {
