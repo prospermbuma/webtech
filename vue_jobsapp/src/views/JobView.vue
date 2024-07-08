@@ -1,17 +1,22 @@
 <script setup>
-import { RouterLink, useRoute } from 'vue-router';
+import { RouterLink, useRoute, useRouter } from 'vue-router';
 import { reactive, onMounted } from "vue";
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
-import BackButton from '@/components/BackButton.vue'
+import BackButton from '@/components/BackButton.vue';
+import ConfirmationDialog from '@/components/ConfirmationDialog.vue';
+import { useToast } from "vue-toastification";
 import axios from 'axios';
 
 const route = useRoute();
+
+const router = useRouter();
 
 const jobId = route.params.id;
 
 const state = reactive({
     job: {},
     isLoading: true,
+    isDialogVisible: false,
 });
 
 onMounted(async () => {
@@ -24,6 +29,29 @@ onMounted(async () => {
         state.isLoading = false;
     }
 });
+
+const toast = useToast();
+
+const showDialog = () => {
+    state.isDialogVisible = true;
+};
+
+const handleConfirm = async () => {
+    state.isDialogVisible = false;
+    try {
+        await axios.delete(`/api/jobs/${jobId}`);
+        toast.success("Job Deleted Successfully");
+        router.push('/jobs');
+    } catch (error) {
+        console.error('Error deleting job', error);
+        toast.error("Job Not Deleted");
+    }
+};
+
+const handleCancel = () => {
+    state.isDialogVisible = false;
+};
+
 </script>
 
 <template>
@@ -83,13 +111,16 @@ onMounted(async () => {
                     <div class="bg-white p-6 rounded-lg shadow-md mt-6">
                         <h3 class="text-xl font-bold mb-6">Manage Job</h3>
                         <RouterLink :to="`/jobs/edit/${state.job.id}`"
-                            class="bg-green-500 hover:bg-green-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
+                            class="bg-green-600 hover:bg-green-600 text-white text-center font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
                             Edit
                             Job</RouterLink>
-                        <button
+                        <button @click="showDialog"
                             class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded-full w-full focus:outline-none focus:shadow-outline mt-4 block">
                             Delete Job
                         </button>
+                        <ConfirmationDialog :isVisible="state.isDialogVisible"
+                            message="Are you sure you want to delete this job?" @confirm="handleConfirm"
+                            @cancel="handleCancel" />
                     </div>
                 </aside>
             </div>
