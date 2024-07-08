@@ -42,9 +42,9 @@ const trancatedDescription = computed(() => {
             <div class="border border-gray-100 mb-5"></div>
 
             <div class="flex flex-col lg:flex-row justify-between mb-4">
-                <div class="text-orange-700 mb-3">
-                    <i class="pi pi-map-marker"></i>
-                    {{ job.location }}
+                <div class="text-orange-700 mb-3 flex align-middle justify-center md:justify-start">
+                    <i class="pi pi-map-marker text-orange-700 mt-1 mr-2"></i>
+                   <p class="text-orange-700"> {{ job.location }}</p>
                 </div>
                 <RouterLink :to="'/jobs/' + job.id"
                     class="h-[36px] bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg text-center text-sm">

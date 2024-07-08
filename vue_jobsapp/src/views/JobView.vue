@@ -2,8 +2,8 @@
 import { RouterLink, useRoute } from 'vue-router';
 import { reactive, onMounted } from "vue";
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue';
-import axios from 'axios';
 import BackButton from '@/components/BackButton.vue'
+import axios from 'axios';
 
 const route = useRoute();
 
@@ -16,7 +16,7 @@ const state = reactive({
 
 onMounted(async () => {
     try {
-        const response = await axios.get(`http://localhost:5000/jobs/${jobId}`);
+        const response = await axios.get(`/api/jobs/${jobId}`);
         state.job = response.data;
     } catch (error) {
         console.error('Error fetching job', error);
@@ -36,7 +36,7 @@ onMounted(async () => {
                         <div class="text-gray-500 mb-4">{{ state.job.type }}</div>
                         <h1 class="text-3xl font-bold mb-4">{{ state.job.title }}</h1>
                         <div class="text-gray-500 mb-4 flex align-middle justify-center md:justify-start">
-                            <i class="pi pi-map-marker text-orange-700 mr-2"></i>
+                            <i class="pi pi-map-marker text-orange-700 mt-1 mr-2"></i>
                             <p class="text-orange-700">{{ state.job.location }}</p>
                         </div>
                     </div>
