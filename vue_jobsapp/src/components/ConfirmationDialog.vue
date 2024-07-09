@@ -48,10 +48,24 @@ const cancel = () => {
     background-color: rgba(0, 0, 0, 0.5);
 }
 
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
 @keyframes popUp {
     from {
         transform: scale(0.8);
     }
+
     to {
         transform: scale(1.0);
     }
@@ -63,6 +77,7 @@ const cancel = () => {
     border-radius: 5px;
     text-align: center;
     animation: popUp 0.3s ease alternate;
+    /* animation: slideIn 2s ease-in-out 0.5s 3 alternate both; */
 }
 
 .modal-content .buttons {
